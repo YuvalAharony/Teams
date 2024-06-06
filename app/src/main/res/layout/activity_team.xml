@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".team">
+
+    <Button
+        android:id="@+id/btn_add_player"
+        android:layout_width="80dp"
+        android:layout_height="77dp"
+        android:foregroundGravity="left"
+        android:text="הוסף שחקן" />
+
+    <EditText
+        android:id="@+id/txtGroupName"
+        android:hint="My team name"
+        android:layout_width="160dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="number" />
+
+
+    <ListView
+        android:layout_width="409dp"
+        android:layout_height="417dp"
+        android:id="@+id/playerList"/>
+
+
+    <EditText
+        android:id="@+id/txtNumOfGroups"
+        android:hint="Number of Groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSaveGroup"
+            android:layout_margin="2dp"
+            android:text="CreateGroups"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCreateGroups"
+            android:layout_margin="2dp"
+            android:text="CreateGroups"/>
+    </LinearLayout>
+
+</LinearLayout>

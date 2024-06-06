@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "757346956599",
+    "firebase_url": "https://finalproject-82b5a-default-rtdb.firebaseio.com",
+    "project_id": "finalproject-82b5a",
+    "storage_bucket": "finalproject-82b5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757346956599:android:231cc9c87d44032a9196b2",
+        "android_client_info": {
+          "package_name": "com.example.yuval_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKYZ33QoVntGH2bUBLoEKYWL4q-PwQLx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
