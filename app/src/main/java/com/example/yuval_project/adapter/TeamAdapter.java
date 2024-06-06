@@ -3,6 +3,7 @@ package com.example.yuval_project.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,10 +31,15 @@ import java.util.List;
 
 public class TeamAdapter extends ArrayAdapter<TeamItem> {
 
-    FirebaseDatabase database;
+    private FirebaseDatabase database;
+    private boolean enableClick;
     public TeamAdapter(@NonNull Context context, List<TeamItem> teamItemList) {
         super(context, 0, teamItemList);
         database = FirebaseDatabase.getInstance();
+        enableClick = true;
+    }
+    public void disableClick(){
+        enableClick = false;
     }
 
     @Override
@@ -44,13 +50,28 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
         }
         TextView name = contentView.findViewById(R.id.name);
         name.setText(teamItem.getName());
-        //ListView playerItemList = contentView.findViewById(R.id.playerlist);
-        //PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), playerList);
-        //playerItemList.setAdapter(playerAdapter);
+        ListView playerlist = contentView.findViewById(R.id.teamPlayerList);
+        PlayerAdapter adapter = new PlayerAdapter(getContext(), teamItem.getPlayerList());
+        if(!enableClick){
+            adapter.disableClick();
+        }
+
+        playerlist.setAdapter(adapter);
+        // by default listview inside a listview will not scroll -force it to scroll
+        playerlist.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         contentView.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
+                if(!enableClick)return;
                 Intent intent = new Intent(getContext(), team.class);
                 intent.putExtra("id", teamItem.getId());
                 getContext().startActivity(intent);
@@ -61,6 +82,7 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
 
             @Override
             public void onClick(View view) {
+                if(!enableClick)return;
                 String userId = AppData.getInstance().getUserId();
                 DatabaseReference teamRef = database.getReference().child("users").child(userId).child("teams").child(teamItem.getId());
                teamRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -73,6 +95,9 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
                });
             }
         });
+        if(!enableClick){
+            btnDeleteTeam.setVisibility(View.INVISIBLE);
+        }
         return contentView;
     }
 }

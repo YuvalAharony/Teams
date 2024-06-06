@@ -7,12 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +60,6 @@ public class team extends AppCompatActivity implements View.OnClickListener{
 
         ListView playerListView = findViewById(R.id.playerList);
 
-
         //TODO get list of playes from intent or database / singletone
 
         playerAdapter = new PlayerAdapter(this, teamItem.getPlayerList());
@@ -95,26 +90,9 @@ public class team extends AppCompatActivity implements View.OnClickListener{
 
         playerAdapter.notifyDataSetChanged();
 
-        txtNumOfGroups = findViewById(R.id.etNumOfGroups);
+        txtNumOfGroups = findViewById(R.id.txtNumOfGroups);
         txtGroupName = findViewById(R.id.txtGroupName);
-//        txtNumOfGroups.setOnKeyListener(new View.OnKeyListener() {
-//
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                return true;
-//            }
-
-//            @Override
-//            public boolean onKey(DialogInterface dialog, int keyCode,
-//                                 KeyEvent event) {
-//
-//                if (keyCode == KeyEvent.KEYCODE_BACK) {
-//                    return true;
-//                }
-//                return true;  // !!! this is wrong it should be return false;
-//            }
-//        });
-
+        txtGroupName.setText(teamItem.getName());
 
         Button btnCreateGroups = findViewById(R.id.btnCreateGroups);
         btnCreateGroups.setOnClickListener(this);
@@ -133,14 +111,15 @@ public class team extends AppCompatActivity implements View.OnClickListener{
             }
             int numOfGroups = Integer.parseInt(txtNumOfGroups.getText().toString());
             if(playerAdapter.getSelectedPlayers().size()  == 0){
-                Toast.makeText(team.this, "GPlease selected players", Toast.LENGTH_LONG).show();
+                Toast.makeText(team.this, "Please selected players", Toast.LENGTH_LONG).show();
                 return;
             }
             if(playerAdapter.getSelectedPlayers().size() % numOfGroups != 0){
                 Toast.makeText(team.this, "Groups don't split equally", Toast.LENGTH_LONG).show();
                 return;
             }
-            AppData.getInstance().createTeams(playerAdapter.getSelectedPlayers(), numOfGroups);
+            List selectedPlayers = new ArrayList(playerAdapter.getSelectedPlayers());
+            AppData.getInstance().createTeams(selectedPlayers, numOfGroups);
             //TODO create activity to show the groups
             Intent intent = new Intent(team.this, FinalTeamsActivity.class);
             startActivity(intent);

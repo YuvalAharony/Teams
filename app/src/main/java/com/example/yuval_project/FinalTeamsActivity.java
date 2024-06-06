@@ -44,6 +44,7 @@ public class FinalTeamsActivity extends AppCompatActivity {
         }
         ListView teamlist = findViewById(R.id.teamList);
         TeamAdapter adapter = new TeamAdapter(this,teams);
+        adapter.disableClick();
         teamlist.setAdapter(adapter);
 
     }

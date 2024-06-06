@@ -14,15 +14,23 @@ import androidx.annotation.NonNull;
 import com.example.yuval_project.R;
 import com.example.yuval_project.data.model.PlayerItem;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlayerAdapter extends ArrayAdapter<PlayerItem> {
-    private List<PlayerItem> selectedPlayers;
+    private Set<PlayerItem> selectedPlayers;
+    private boolean enableClick;
     public PlayerAdapter(@NonNull Context context, List<PlayerItem> playerList) {
         super(context, 0, playerList);
-        this.selectedPlayers = new ArrayList<PlayerItem>();
+        this.selectedPlayers = new HashSet<>();
+        this.enableClick = true;
     }
-    public List<PlayerItem> getSelectedPlayers(){
+
+    public  void disableClick(){
+        this.enableClick = false;
+    }
+    public Set<PlayerItem> getSelectedPlayers(){
         return selectedPlayers;
     }
     @Override
@@ -34,11 +42,20 @@ public class PlayerAdapter extends ArrayAdapter<PlayerItem> {
         TextView name = contentView.findViewById(R.id.name);
         TextView grade = contentView.findViewById(R.id.grade1);
         CheckBox chkSelect = contentView.findViewById(R.id.chkSelect);
-        name.setText(player.getName());
 
+        name.setText(player.getName());
         grade.setText(player.getGrade()+"");
 
-        contentView.setOnClickListener(new View.OnClickListener(){
+        if(!enableClick){
+            chkSelect.setVisibility(View.INVISIBLE);
+        }
+        if(chkSelect.isChecked()){
+            selectedPlayers.add(player);
+        }else{
+            selectedPlayers.remove(player);
+        }
+
+        chkSelect.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 if(chkSelect.isChecked()){

@@ -5,11 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15dp"
     android:orientation="vertical"
     tools:context=".FinalTeamsActivity">
 
     <ListView
-        android:layout_width="409dp"
-        android:layout_height="605dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/teamList"/>
 </LinearLayout>
