@@ -62,7 +62,7 @@ public class team extends AppCompatActivity implements View.OnClickListener{
 
         //TODO get list of playes from intent or database / singletone
 
-        playerAdapter = new PlayerAdapter(this, teamItem.getPlayerList());
+        playerAdapter = new PlayerAdapter(this, teamItem.getPlayerList(),teamItem);
         playerListView.setAdapter(playerAdapter);
 
         ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

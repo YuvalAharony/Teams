@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="#775533"
+    android:background="#FFFFFF"
     android:orientation="horizontal"
     tools:context=".team">
 
@@ -13,14 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:id="@+id/name"
-
+        android:textColor="#224466"
         android:text="Avi cohen"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/grade1"
-        android:textColor="@color/white"
+        android:textColor="#225577"
         android:text="8"
         />
 
@@ -30,4 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Select player" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDeletePlayer"
+        android:text="DELETE"/>
 </LinearLayout>

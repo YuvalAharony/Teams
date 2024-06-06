@@ -33,13 +33,18 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
 
     private FirebaseDatabase database;
     private boolean enableClick;
+    private boolean showPlayers;
     public TeamAdapter(@NonNull Context context, List<TeamItem> teamItemList) {
         super(context, 0, teamItemList);
         database = FirebaseDatabase.getInstance();
         enableClick = true;
+        showPlayers = false;
     }
     public void disableClick(){
         enableClick = false;
+    }
+    public void showPlayers(){
+        this.showPlayers = true;
     }
 
     @Override
@@ -50,23 +55,26 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
         }
         TextView name = contentView.findViewById(R.id.name);
         name.setText(teamItem.getName());
-        ListView playerlist = contentView.findViewById(R.id.teamPlayerList);
-        PlayerAdapter adapter = new PlayerAdapter(getContext(), teamItem.getPlayerList());
-        if(!enableClick){
-            adapter.disableClick();
+        if(showPlayers){
+            ListView playerlist = contentView.findViewById(R.id.teamPlayerList);
+            PlayerAdapter adapter = new PlayerAdapter(getContext(), teamItem.getPlayerList(),teamItem);
+            if(!enableClick){
+                adapter.disableClick();
+            }
+
+            playerlist.setAdapter(adapter);
+            // by default listview inside a listview will not scroll -force it to scroll
+            playerlist.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
         }
 
-        playerlist.setAdapter(adapter);
-        // by default listview inside a listview will not scroll -force it to scroll
-        playerlist.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
         contentView.setOnClickListener(new View.OnClickListener(){
 
             @Override
