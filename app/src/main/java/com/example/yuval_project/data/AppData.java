@@ -25,12 +25,6 @@ public class AppData {
 
     private AppData(){
         List<PlayerItem> playerList = new ArrayList<PlayerItem>();
-        playerList.add(new PlayerItem("Avi Cohen", 8));
-        playerList.add(new PlayerItem("Beni Cohen", 8));
-        playerList.add(new PlayerItem("Asaf Cohen", 7));
-        playerList.add(new PlayerItem("Assaf Cohen", 8));
-        playerList.add(new PlayerItem("Rami Cohen", 8));
-        playerList.add(new PlayerItem("Guy Cohen", 8));
 
         teamMap = new HashMap<String, List<PlayerItem>>();
         teamMap.put("Hapoel", playerList);
@@ -42,7 +36,21 @@ public class AppData {
         return this.teamItemList;
     }
     public void addTeam(TeamItem team){
-        this.teamItemList.add(team);
+        if(!teamItemList.contains(team)){
+            this.teamItemList.add(team);
+        }
+    }
+
+    public void removeTeam(TeamItem team){
+        teamItemList.remove(team);
+    }
+    public TeamItem findTeamById(String id){
+        for(TeamItem t : teamItemList){
+            if(t.getId().equals(id)){
+                return t;
+            }
+        }
+        return null;
     }
     public static AppData getInstance(){
         return instance;
@@ -92,7 +100,9 @@ public class AppData {
 
 
     }
-
+    public Map<String, List<PlayerItem>> getSelectedTeamMap(){
+        return selectedTeamMap;
+    }
     public String getUserId(){
         return userId;
     }

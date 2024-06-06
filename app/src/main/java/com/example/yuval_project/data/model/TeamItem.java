@@ -16,6 +16,14 @@ public class TeamItem {
         this.id = "";
         this.playerList = new ArrayList<PlayerItem>();
     }
+    public TeamItem(String name, String id, ArrayList<PlayerItem> players) {    // for create teams
+        this.name = name;
+        this.id = id;
+        this.playerList =players;
+    }
+    public TeamItem(){
+        this("");
+    }
     public void addPlayer(PlayerItem player){
         this.playerList.add(player);
     }
@@ -28,10 +36,10 @@ public class TeamItem {
         this.name = name;
     }
 
-    private String getId(){
+    public String getId(){
         return this.id;
     }
-    private void setId(String id){
+    public void setId(String id){
         this.id = id;
     }
 
@@ -41,5 +49,13 @@ public class TeamItem {
 
     public void setPlayerList(ArrayList<PlayerItem> playerList) {
         this.playerList = playerList;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof  TeamItem))return false;
+
+        TeamItem other = (TeamItem)obj;
+        return other.id.equals(this.id);
     }
 }

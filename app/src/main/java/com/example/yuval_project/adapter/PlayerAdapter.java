@@ -32,10 +32,11 @@ public class PlayerAdapter extends ArrayAdapter<PlayerItem> {
             contentView = LayoutInflater.from(getContext()).inflate(R.layout.player_item, group, false);
         }
         TextView name = contentView.findViewById(R.id.name);
-        TextView grade = contentView.findViewById(R.id.grade);
+        TextView grade = contentView.findViewById(R.id.grade1);
         CheckBox chkSelect = contentView.findViewById(R.id.chkSelect);
         name.setText(player.getName());
-        grade.setText(player.getGrade());
+
+        grade.setText(player.getGrade()+"");
 
         contentView.setOnClickListener(new View.OnClickListener(){
             @Override

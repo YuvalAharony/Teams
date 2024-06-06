@@ -21,15 +21,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="שם" />
+        android:hint="שם" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="ציון" />
+        android:inputType="number"
+        android:hint="ציון" />
     <Button
         android:id="@+id/btn_save_player"
         android:layout_width="80dp"

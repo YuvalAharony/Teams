@@ -1,11 +1,18 @@
 package com.example.yuval_project;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +35,11 @@ import java.util.List;
 
 public class team extends AppCompatActivity implements View.OnClickListener{
 
-    private List<PlayerItem> playerList;
+    //private List<PlayerItem> playerList;
     private EditText txtNumOfGroups;
     private EditText txtGroupName;
     private PlayerAdapter playerAdapter;
+    private TeamItem teamItem;
 
     // firebase
     private FirebaseDatabase database;
@@ -45,26 +53,67 @@ public class team extends AppCompatActivity implements View.OnClickListener{
         // initialize connection to firebase realtime
         database= FirebaseDatabase.getInstance();
 
+        // if this is existing team update
+        String teamId = getIntent().getStringExtra("id");
+        if(teamId != null){
+            teamItem = AppData.getInstance().findTeamById(teamId);
+            //playerList = teamItem.getPlayerList();
+        }else{
+            teamItem = new TeamItem();
+        }
+
         ListView playerListView = findViewById(R.id.playerList);
-        playerList = AppData.getInstance().getPlayerList("Hapoel");
+
 
         //TODO get list of playes from intent or database / singletone
 
-        playerAdapter = new PlayerAdapter(this, playerList);
+        playerAdapter = new PlayerAdapter(this, teamItem.getPlayerList());
         playerListView.setAdapter(playerAdapter);
+
+        ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            playerAdapter.notifyDataSetChanged();
+        });
 
         Button btnAddPlayer = findViewById(R.id.btn_add_player);
         btnAddPlayer.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
+                boolean teamExists = false;
+                if(teamItem.getId().equals("")){    // add new team
+                    teamExists = createTeam();
+                }else{
+                    teamExists = true;
+                }
+                if(!teamExists)return;
                 Intent intent = new Intent(team.this, player.class);
-                startActivity(intent);
+                intent.putExtra("teamId", teamItem.getId());
+                activityLauncher.launch(intent);
             }
         });
 
-        txtNumOfGroups = findViewById(R.id.txtNumOfGroups);
+
+        playerAdapter.notifyDataSetChanged();
+
+        txtNumOfGroups = findViewById(R.id.etNumOfGroups);
         txtGroupName = findViewById(R.id.txtGroupName);
+//        txtNumOfGroups.setOnKeyListener(new View.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                return true;
+//            }
+
+//            @Override
+//            public boolean onKey(DialogInterface dialog, int keyCode,
+//                                 KeyEvent event) {
+//
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    return true;
+//                }
+//                return true;  // !!! this is wrong it should be return false;
+//            }
+//        });
 
 
         Button btnCreateGroups = findViewById(R.id.btnCreateGroups);
@@ -79,26 +128,56 @@ public class team extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View view) {
         if(view.getId() == R.id.btnCreateGroups){
             if(txtNumOfGroups.getText().length() == 0){
-                Toast.makeText(team.this, "Please add number of groups", Toast.LENGTH_LONG);
+                Toast.makeText(team.this, "Please add number of groups", Toast.LENGTH_LONG).show();
                 return;
             }
             int numOfGroups = Integer.parseInt(txtNumOfGroups.getText().toString());
+            if(playerAdapter.getSelectedPlayers().size()  == 0){
+                Toast.makeText(team.this, "GPlease selected players", Toast.LENGTH_LONG).show();
+                return;
+            }
             if(playerAdapter.getSelectedPlayers().size() % numOfGroups != 0){
-                Toast.makeText(team.this, "Groups don't split equally", Toast.LENGTH_LONG);
+                Toast.makeText(team.this, "Groups don't split equally", Toast.LENGTH_LONG).show();
                 return;
             }
             AppData.getInstance().createTeams(playerAdapter.getSelectedPlayers(), numOfGroups);
             //TODO create activity to show the groups
-            //Intent intent = new Intent(team.this, player.class);
-            //startActivity(intent);
+            Intent intent = new Intent(team.this, FinalTeamsActivity.class);
+            startActivity(intent);
         }else if(view.getId() == R.id.btnSaveGroup){
             String name = txtGroupName.getText().toString();
             firebaseTeams = database.getReference();
             String userId = AppData.getInstance().getUserId();
-            DatabaseReference t = firebaseTeams.child("users").child(userId).child("teams").push();
+            if(teamItem.getId().equals("")){    // add new team
+               createTeam();
+            }else{  // update existing team
+                DatabaseReference t = firebaseTeams.child("users")
+                        .child(userId).
+                        child("teams")
+                        .child(teamItem.getId());
+                teamItem.setName(name);
+                t.setValue(teamItem);
+                finish();
+            }
 
-            TeamItem team = new TeamItem(name, t.getKey());
-            t.setValue(team);
+            AppData.getInstance().addTeam(teamItem);
         }
+    }
+
+    private boolean createTeam(){
+        String name = txtGroupName.getText().toString();
+        if(name == null || name.length() == 0){
+            Toast.makeText(this, "please enter team name", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        firebaseTeams = database.getReference();
+        String userId = AppData.getInstance().getUserId();
+
+        DatabaseReference t = firebaseTeams.child("users").child(userId).child("teams").push();
+        teamItem.setId(t.getKey());
+        teamItem.setName(name);
+        t.setValue(teamItem);
+        AppData.getInstance().addTeam(teamItem);
+        return true;
     }
 }

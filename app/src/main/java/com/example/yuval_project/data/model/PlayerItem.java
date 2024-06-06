@@ -10,7 +10,7 @@ public class PlayerItem {
         this.name = name;
         this.grade = grade;
     }
-
+    public PlayerItem(){}
     public String getName() {
         return name;
     }

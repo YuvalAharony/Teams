@@ -41,11 +41,11 @@ public class teams extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityTeamsBinding binding;
-    List<TeamItem> teamItemList;
 
     //firebase
     private FirebaseDatabase database;
     private DatabaseReference firebaseTeams;
+    private AppData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +54,7 @@ public class teams extends AppCompatActivity {
         binding = ActivityTeamsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_teams);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        data = AppData.getInstance();
 
         Button btnNewTeam = findViewById(R.id.newteam);
         btnNewTeam.setOnClickListener(new View.OnClickListener(){
@@ -69,8 +65,14 @@ public class teams extends AppCompatActivity {
                 teams.this.startActivity(intent);
             }
         });
+        // list view and adapter5
+
+        ListView teamlist = findViewById(R.id.teamlist);
+        TeamAdapter adapter = new TeamAdapter(this, data.getTeamItemList());
+        teamlist.setAdapter(adapter);
 
         // read teams from firebase
+        database = FirebaseDatabase.getInstance();
         firebaseTeams = database.getReference();
         String userId = AppData.getInstance().getUserId();
         firebaseTeams.child("users").child(userId).child("teams").get().
@@ -79,39 +81,19 @@ public class teams extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
 
                     if(task.isSuccessful()){
-                        for(DataSnapshot data :task.getResult().getChildren()){ // for each element in the list getChildren
-                            TeamItem t = data.getValue(TeamItem.class);
-                            teamItemList.add(t);
+                        for(DataSnapshot node :task.getResult().getChildren()){ // for each element in the list getChildren
+                            TeamItem t = node.getValue(TeamItem.class);
+                            t.setId(node.getKey());
+                            data.addTeam(t);
                         }
 
+                        adapter.notifyDataSetChanged();
                     }else{
                         Toast.makeText(teams.this, "failed to access firebase", Toast.LENGTH_LONG).show();
                     }
                 }
             });
-        ListView list = findViewById(R.id.playerList);
-        // dummy teams
-        teamItemList = new ArrayList<TeamItem>();
-        teamItemList.add(new TeamItem("Hapoel Ta"));
-        teamItemList.add(new TeamItem("Hapoel Ramat Gan"));
-        teamItemList.add(new TeamItem("Hapoel Givataim"));
-        teamItemList.add(new TeamItem("Hapoel Peah Tikva"));
-        teamItemList.add(new TeamItem("Hapoel Haifa"));
-        teamItemList.add(new TeamItem("Hapoel Jerusalem"));
 
-        ListView teamlist = findViewById(R.id.teamlist);
-        TeamAdapter adapter = new TeamAdapter(this, teamItemList);
-        teamlist.setAdapter(adapter);
-        /*
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-         */
     }
 
     @Override

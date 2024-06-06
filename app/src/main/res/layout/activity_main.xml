@@ -17,7 +17,7 @@
         android:freezesText="false"
         android:text="בניית כוחות"
         android:textColorHint="#C31010"
-        android:textSize="48sp"
+        android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="409dp"
-        android:layout_height="334dp"
+        android:layout_height="221dp"
         app:srcCompat="@drawable/sport"
         tools:layout_editor_absoluteX="2dp"
         tools:layout_editor_absoluteY="336dp" />
