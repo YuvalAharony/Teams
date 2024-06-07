@@ -1,5 +1,4 @@
 package com.example.yuval_project.adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,21 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
-
 import com.example.yuval_project.R;
 import com.example.yuval_project.data.AppData;
 import com.example.yuval_project.data.model.PlayerItem;
 import com.example.yuval_project.data.model.TeamItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

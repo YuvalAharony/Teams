@@ -1,36 +1,22 @@
 package com.example.yuval_project;
-
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.yuval_project.adapter.PlayerAdapter;
 import com.example.yuval_project.data.AppData;
-import com.example.yuval_project.data.model.PlayerItem;
 import com.example.yuval_project.data.model.TeamItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class team extends AppCompatActivity implements View.OnClickListener{
-
     //private List<PlayerItem> playerList;
     private EditText txtNumOfGroups;
     private EditText txtGroupName;
@@ -53,14 +39,13 @@ public class team extends AppCompatActivity implements View.OnClickListener{
         String teamId = getIntent().getStringExtra("id");
         if(teamId != null){
             teamItem = AppData.getInstance().findTeamById(teamId);
-            //playerList = teamItem.getPlayerList();
+
         }else{
             teamItem = new TeamItem();
         }
 
         ListView playerListView = findViewById(R.id.playerList);
 
-        //TODO get list of playes from intent or database / singletone
 
         playerAdapter = new PlayerAdapter(this, teamItem.getPlayerList(),teamItem);
         playerListView.setAdapter(playerAdapter);

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import com.example.yuval_project.data.AppData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,12 +26,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-//import com.example.yuval_project.databinding.ActivityLogin3Binding;
+
 
 public class login extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    //private ActivityLogin3Binding binding;
+
     private FirebaseAuth auth;
     private static final String EMAIL = "EMAIL";
     private static final String PASSWORD = "PASSWORD";
@@ -42,10 +41,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
 
-        //binding = ActivityLogin3Binding.inflate(getLayoutInflater());
-        //setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.toolbar);
 
         auth = FirebaseAuth.getInstance();
         EditText username = findViewById(R.id.username);

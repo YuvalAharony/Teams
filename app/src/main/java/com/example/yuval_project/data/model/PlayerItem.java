@@ -1,7 +1,5 @@
 package com.example.yuval_project.data.model;
-
 import java.util.Objects;
-
 public class PlayerItem {
     private String name;
     private int grade;

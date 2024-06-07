@@ -1,5 +1,4 @@
 package com.example.yuval_project.adapter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.example.yuval_project.R;
 import com.example.yuval_project.data.AppData;
 import com.example.yuval_project.data.model.PlayerItem;
@@ -24,11 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
-import java.util.ArrayList;
 import java.util.List;
-
 public class TeamAdapter extends ArrayAdapter<TeamItem> {
 
     private FirebaseDatabase database;
@@ -55,24 +48,14 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
         }
         TextView name = contentView.findViewById(R.id.name);
         name.setText(teamItem.getName());
-        if(showPlayers){
+        if(showPlayers) {
             ListView playerlist = contentView.findViewById(R.id.teamPlayerList);
-            PlayerAdapter adapter = new PlayerAdapter(getContext(), teamItem.getPlayerList(),teamItem);
-            if(!enableClick){
+            PlayerAdapter adapter = new PlayerAdapter(getContext(), teamItem.getPlayerList(), teamItem);
+            if (!enableClick) {
                 adapter.disableClick();
             }
 
             playerlist.setAdapter(adapter);
-            // by default listview inside a listview will not scroll -force it to scroll
-            playerlist.setOnTouchListener(new View.OnTouchListener() {
-                // Setting on Touch Listener for handling the touch inside ScrollView
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    // Disallow the touch request for parent scroll on touch of child view
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    return false;
-                }
-            });
         }
 
         contentView.setOnClickListener(new View.OnClickListener(){

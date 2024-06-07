@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/grade1"
-        android:textColor="#225577"
+        android:textColor="#224466"
         android:text="8"
         />
 
@@ -34,5 +34,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnDeletePlayer"
-        android:text="DELETE"/>
+        android:text="מחיקה"/>
 </LinearLayout>

@@ -1,28 +1,14 @@
 package com.example.yuval_project;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.yuval_project.data.AppData;
 import com.example.yuval_project.data.model.PlayerItem;
 import com.example.yuval_project.data.model.TeamItem;
-
 public class player extends AppCompatActivity {
-
     TeamItem teamItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +40,4 @@ public class player extends AppCompatActivity {
         });
 
     }
-
-
 }

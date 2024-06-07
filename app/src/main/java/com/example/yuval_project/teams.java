@@ -1,44 +1,26 @@
 package com.example.yuval_project;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.yuval_project.adapter.TeamAdapter;
 import com.example.yuval_project.data.AppData;
-import com.example.yuval_project.data.model.PlayerItem;
 import com.example.yuval_project.data.model.TeamItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.example.yuval_project.databinding.ActivityTeamsBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class teams extends AppCompatActivity {
-
     private AppBarConfiguration appBarConfiguration;
     private ActivityTeamsBinding binding;
 

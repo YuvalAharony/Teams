@@ -1,14 +1,11 @@
 package com.example.yuval_project.data;
-
 import com.example.yuval_project.data.model.PlayerItem;
 import com.example.yuval_project.data.model.TeamItem;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-
 public class AppData {
     // singleton
     private List<PlayerItem> playerList;

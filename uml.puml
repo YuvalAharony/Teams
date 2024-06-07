@@ -1,0 +1,305 @@
+@startuml
+class com.example.yuval_project.FinalTeamsActivity {
+- AppData data
+# void onCreate(Bundle)
+}
+
+
+class com.example.yuval_project.player {
+~ TeamItem teamItem
+# void onCreate(Bundle)
+}
+
+
+class com.example.yuval_project.First2Fragment {
+- FragmentFirst2Binding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.First3Fragment {
+- FragmentFirst3Binding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.SecondFragment {
+- FragmentSecondBinding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.ui.login.LoginFormState {
+- Integer usernameError
+- Integer passwordError
+- boolean isDataValid
+~ <<Create>> LoginFormState(Integer,Integer)
+~ <<Create>> LoginFormState(boolean)
+~ Integer getUsernameError()
+~ Integer getPasswordError()
+~ boolean isDataValid()
+}
+
+
+class com.example.yuval_project.MainActivity {
+# void onCreate(Bundle)
+}
+
+class com.example.yuval_project.ui.login.LoginViewModel {
+- MutableLiveData<LoginFormState> loginFormState
+- MutableLiveData<LoginResult> loginResult
+- LoginRepository loginRepository
+~ <<Create>> LoginViewModel(LoginRepository)
+~ LiveData<LoginFormState> getLoginFormState()
+~ LiveData<LoginResult> getLoginResult()
++ void login(String,String)
++ void loginDataChanged(String,String)
+- boolean isUserNameValid(String)
+- boolean isPasswordValid(String)
+}
+
+
+class com.example.yuval_project.FirstFragment {
+- FragmentFirstBinding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.ui.login.LoginViewModelFactory {
++ T create(Class<T>)
+}
+
+class com.example.yuval_project.ui.login.LoginResult {
+- LoggedInUserView success
+- Integer error
+~ <<Create>> LoginResult(Integer)
+~ <<Create>> LoginResult(LoggedInUserView)
+~ LoggedInUserView getSuccess()
+~ Integer getError()
+}
+
+
+class com.example.yuval_project.team {
+- EditText txtNumOfGroups
+- EditText txtGroupName
+- PlayerAdapter playerAdapter
+- TeamItem teamItem
+- FirebaseDatabase database
+- DatabaseReference firebaseTeams
+# void onCreate(Bundle)
++ void onClick(View)
+- boolean createTeam()
+}
+
+
+class com.example.yuval_project.data.LoginDataSource {
++ Result<LoggedInUser> login(String,String)
++ void logout()
+}
+
+class com.example.yuval_project.data.Result {
+- <<Create>> Result()
++ String toString()
+}
+
+class com.example.yuval_project.data.Result$Success {
+- T data
++ <<Create>> Success(T)
++ T getData()
+}
+
+
+class com.example.yuval_project.data.Result$Error {
+- Exception error
++ <<Create>> Error(Exception)
++ Exception getError()
+}
+
+
+class com.example.yuval_project.teams {
+- AppBarConfiguration appBarConfiguration
+- ActivityTeamsBinding binding
+- FirebaseDatabase database
+- DatabaseReference firebaseTeams
+- AppData data
+# void onCreate(Bundle)
++ boolean onSupportNavigateUp()
+}
+
+
+class com.example.yuval_project.data.AppData {
+- List<PlayerItem> playerList
+- Map<String,List<PlayerItem>> teamMap
+- Map<String,List<PlayerItem>> selectedTeamMap
+- ArrayList<TeamItem> teamItemList
+- String userId
+- {static} AppData instance
+- <<Create>> AppData()
++ ArrayList<TeamItem> getTeamItemList()
++ void addTeam(TeamItem)
++ void removeTeam(TeamItem)
++ TeamItem findTeamById(String)
++ {static} AppData getInstance()
++ List<PlayerItem> getPlayerList(String)
++ void addPlayer(String,PlayerItem)
++ void createTeams(List<PlayerItem>,int)
++ Map<String,List<PlayerItem>> getSelectedTeamMap()
++ String getUserId()
++ void setUserId(String)
+}
+
+
+class com.example.yuval_project.adapter.TeamAdapter {
+- FirebaseDatabase database
+- boolean enableClick
+- boolean showPlayers
++ <<Create>> TeamAdapter(Context,List<TeamItem>)
++ void disableClick()
++ void showPlayers()
++ View getView(int,View,ViewGroup)
+}
+
+
+class com.example.yuval_project.Second3Fragment {
+- FragmentSecond3Binding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.adapter.PlayerAdapter {
+- Set<PlayerItem> selectedPlayers
+- boolean enableClick
+- FirebaseDatabase database
+- TeamItem team
++ <<Create>> PlayerAdapter(Context,List<PlayerItem>,TeamItem)
++ void disableClick()
++ Set<PlayerItem> getSelectedPlayers()
++ View getView(int,View,ViewGroup)
+}
+
+
+class com.example.yuval_project.ui.login.LoginActivity {
+- LoginViewModel loginViewModel
+- ActivityLoginBinding binding
++ void onCreate(Bundle)
+- void updateUiWithUser(LoggedInUserView)
+- void showLoginFailed(Integer)
+}
+
+
+class com.example.yuval_project.Second2Fragment {
+- FragmentSecond2Binding binding
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onDestroyView()
+}
+
+
+class com.example.yuval_project.login {
+- AppBarConfiguration appBarConfiguration
+- FirebaseAuth auth
+- {static} String EMAIL
+- {static} String PASSWORD
+~ TextView tvTimer
+# void onCreate(Bundle)
++ boolean onSupportNavigateUp()
+}
+
+
+class com.example.yuval_project.data.LoginRepository {
+- {static} LoginRepository instance
+- LoginDataSource dataSource
+- LoggedInUser user
+- <<Create>> LoginRepository(LoginDataSource)
++ {static} LoginRepository getInstance(LoginDataSource)
++ boolean isLoggedIn()
++ void logout()
+- void setLoggedInUser(LoggedInUser)
++ Result<LoggedInUser> login(String,String)
+}
+
+
+class com.example.yuval_project.data.model.PlayerItem {
+- String name
+- int grade
++ <<Create>> PlayerItem(String,int)
++ <<Create>> PlayerItem()
++ String getName()
++ void setName(String)
++ int getGrade()
++ void setGrade(int)
++ boolean equals(Object)
++ int hashCode()
+}
+
+
+class com.example.yuval_project.ui.login.LoggedInUserView {
+- String displayName
+~ <<Create>> LoggedInUserView(String)
+~ String getDisplayName()
+}
+
+
+class com.example.yuval_project.data.model.LoggedInUser {
+- String userId
+- String displayName
++ <<Create>> LoggedInUser(String,String)
++ String getUserId()
++ String getDisplayName()
+}
+
+
+class com.example.yuval_project.data.model.TeamItem {
+- String name
+- ArrayList<PlayerItem> playerList
+- String id
++ <<Create>> TeamItem(String,String)
++ <<Create>> TeamItem(String)
++ <<Create>> TeamItem(String,String,ArrayList<PlayerItem>)
++ <<Create>> TeamItem()
++ void addPlayer(PlayerItem)
++ String getName()
++ void setName(String)
++ String getId()
++ void setId(String)
++ ArrayList<PlayerItem> getPlayerList()
++ void setPlayerList(ArrayList<PlayerItem>)
++ boolean equals(Object)
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.FinalTeamsActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.player
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.First2Fragment
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.First3Fragment
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.SecondFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.MainActivity
+androidx.lifecycle.ViewModel <|-- com.example.yuval_project.ui.login.LoginViewModel
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.FirstFragment
+com.example.yuval_project.ui.login.Factory <|.. com.example.yuval_project.ui.login.LoginViewModelFactory
+com.example.yuval_project.OnClickListener <|.. com.example.yuval_project.team
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.team
+com.example.yuval_project.data.Result +.. com.example.yuval_project.data.Result$Success
+com.example.yuval_project.data.Result <|-- com.example.yuval_project.data.Result$Success
+com.example.yuval_project.data.Result +.. com.example.yuval_project.data.Result$Error
+com.example.yuval_project.data.Result <|-- com.example.yuval_project.data.Result$Error
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.teams
+android.widget.ArrayAdapter <|-- com.example.yuval_project.adapter.TeamAdapter
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.Second3Fragment
+android.widget.ArrayAdapter <|-- com.example.yuval_project.adapter.PlayerAdapter
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.ui.login.LoginActivity
+androidx.fragment.app.Fragment <|-- com.example.yuval_project.Second2Fragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.yuval_project.login
+@enduml
