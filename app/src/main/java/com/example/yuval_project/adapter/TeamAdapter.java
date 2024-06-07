@@ -56,6 +56,16 @@ public class TeamAdapter extends ArrayAdapter<TeamItem> {
             }
 
             playerlist.setAdapter(adapter);
+            // by default listview inside a listview will not scroll -force it to scroll
+            playerlist.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
         }
 
         contentView.setOnClickListener(new View.OnClickListener(){

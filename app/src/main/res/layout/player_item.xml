@@ -20,6 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/grade1"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:textColor="#224466"
         android:text="8"
         />

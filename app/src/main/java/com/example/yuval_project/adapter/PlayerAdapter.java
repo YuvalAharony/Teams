@@ -50,7 +50,7 @@ public class PlayerAdapter extends ArrayAdapter<PlayerItem> {
         chkSelect.setChecked(false);
 
         name.setText(player.getName());
-        grade.setText(player.getGrade()+"");
+        grade.setText(player.getGrade()+" ");
 
         if(!enableClick){
             chkSelect.setVisibility(View.INVISIBLE);
